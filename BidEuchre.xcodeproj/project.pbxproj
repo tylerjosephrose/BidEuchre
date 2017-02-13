@@ -12,6 +12,10 @@
 		9ACF386A1E52697E00E40EF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ACF38681E52697E00E40EF5 /* Main.storyboard */; };
 		9ACF386C1E52697E00E40EF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ACF386B1E52697E00E40EF5 /* Assets.xcassets */; };
 		9ACF386F1E52697E00E40EF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9ACF386D1E52697E00E40EF5 /* LaunchScreen.storyboard */; };
+		9ACF387B1E526B9700E40EF5 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF387A1E526B9700E40EF5 /* GameViewController.swift */; };
+		9ACF387D1E526F8A00E40EF5 /* CardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF387C1E526F8A00E40EF5 /* CardButton.swift */; };
+		9ACF38831E52702B00E40EF5 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF38821E52702B00E40EF5 /* Card.swift */; };
+		9ACF38851E52734800E40EF5 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF38841E52734800E40EF5 /* Deck.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		9ACF386B1E52697E00E40EF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9ACF386E1E52697E00E40EF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9ACF38701E52697E00E40EF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ACF387A1E526B9700E40EF5 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		9ACF387C1E526F8A00E40EF5 /* CardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardButton.swift; sourceTree = "<group>"; };
+		9ACF38821E52702B00E40EF5 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		9ACF38841E52734800E40EF5 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,42 @@
 		9ACF38631E52697E00E40EF5 /* BidEuchre */ = {
 			isa = PBXGroup;
 			children = (
+				9ACF38811E52700E00E40EF5 /* View */,
+				9ACF38801E52700200E40EF5 /* Controller */,
+				9ACF387F1E526FDC00E40EF5 /* Model */,
 				9ACF38641E52697E00E40EF5 /* AppDelegate.swift */,
-				9ACF38661E52697E00E40EF5 /* ViewController.swift */,
-				9ACF38681E52697E00E40EF5 /* Main.storyboard */,
 				9ACF386B1E52697E00E40EF5 /* Assets.xcassets */,
-				9ACF386D1E52697E00E40EF5 /* LaunchScreen.storyboard */,
 				9ACF38701E52697E00E40EF5 /* Info.plist */,
 			);
 			path = BidEuchre;
+			sourceTree = "<group>";
+		};
+		9ACF387F1E526FDC00E40EF5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9ACF38821E52702B00E40EF5 /* Card.swift */,
+				9ACF38841E52734800E40EF5 /* Deck.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9ACF38801E52700200E40EF5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9ACF387A1E526B9700E40EF5 /* GameViewController.swift */,
+				9ACF38661E52697E00E40EF5 /* ViewController.swift */,
+				9ACF387C1E526F8A00E40EF5 /* CardButton.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9ACF38811E52700E00E40EF5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9ACF38681E52697E00E40EF5 /* Main.storyboard */,
+				9ACF386D1E52697E00E40EF5 /* LaunchScreen.storyboard */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +173,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ACF38851E52734800E40EF5 /* Deck.swift in Sources */,
 				9ACF38671E52697E00E40EF5 /* ViewController.swift in Sources */,
+				9ACF387D1E526F8A00E40EF5 /* CardButton.swift in Sources */,
+				9ACF38831E52702B00E40EF5 /* Card.swift in Sources */,
+				9ACF387B1E526B9700E40EF5 /* GameViewController.swift in Sources */,
 				9ACF38651E52697E00E40EF5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
