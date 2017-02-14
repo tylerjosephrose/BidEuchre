@@ -8,16 +8,6 @@
 
 import Foundation
 
-//
-//  Card.swift
-//  EuchreSwift
-//
-//  Created by Tyler Rose on 12/9/16.
-//  Copyright © 2016 Tyler Rose. All rights reserved.
-//
-
-import Foundation
-
 enum Value: Int {
 	case Nine = 9, Ten = 10, Jack = 11, Queen = 12, King = 13, Ace = 14
 }

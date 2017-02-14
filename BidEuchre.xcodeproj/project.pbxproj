@@ -16,6 +16,10 @@
 		9ACF387D1E526F8A00E40EF5 /* CardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF387C1E526F8A00E40EF5 /* CardButton.swift */; };
 		9ACF38831E52702B00E40EF5 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF38821E52702B00E40EF5 /* Card.swift */; };
 		9ACF38851E52734800E40EF5 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF38841E52734800E40EF5 /* Deck.swift */; };
+		9ACF38871E52745600E40EF5 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF38861E52745600E40EF5 /* Player.swift */; };
+		9ACF38891E5274A000E40EF5 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF38881E5274A000E40EF5 /* AI.swift */; };
+		9ACF388B1E5274CF00E40EF5 /* Trick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF388A1E5274CF00E40EF5 /* Trick.swift */; };
+		9ACF388F1E5286CF00E40EF5 /* BidViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACF388E1E5286CF00E40EF5 /* BidViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +34,10 @@
 		9ACF387C1E526F8A00E40EF5 /* CardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardButton.swift; sourceTree = "<group>"; };
 		9ACF38821E52702B00E40EF5 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		9ACF38841E52734800E40EF5 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		9ACF38861E52745600E40EF5 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		9ACF38881E5274A000E40EF5 /* AI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
+		9ACF388A1E5274CF00E40EF5 /* Trick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trick.swift; sourceTree = "<group>"; };
+		9ACF388E1E5286CF00E40EF5 /* BidViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BidViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +85,9 @@
 			children = (
 				9ACF38821E52702B00E40EF5 /* Card.swift */,
 				9ACF38841E52734800E40EF5 /* Deck.swift */,
+				9ACF38861E52745600E40EF5 /* Player.swift */,
+				9ACF38881E5274A000E40EF5 /* AI.swift */,
+				9ACF388A1E5274CF00E40EF5 /* Trick.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -87,6 +98,7 @@
 				9ACF387A1E526B9700E40EF5 /* GameViewController.swift */,
 				9ACF38661E52697E00E40EF5 /* ViewController.swift */,
 				9ACF387C1E526F8A00E40EF5 /* CardButton.swift */,
+				9ACF388E1E5286CF00E40EF5 /* BidViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -177,7 +189,11 @@
 				9ACF38671E52697E00E40EF5 /* ViewController.swift in Sources */,
 				9ACF387D1E526F8A00E40EF5 /* CardButton.swift in Sources */,
 				9ACF38831E52702B00E40EF5 /* Card.swift in Sources */,
+				9ACF38871E52745600E40EF5 /* Player.swift in Sources */,
+				9ACF38891E5274A000E40EF5 /* AI.swift in Sources */,
+				9ACF388F1E5286CF00E40EF5 /* BidViewController.swift in Sources */,
 				9ACF387B1E526B9700E40EF5 /* GameViewController.swift in Sources */,
+				9ACF388B1E5274CF00E40EF5 /* Trick.swift in Sources */,
 				9ACF38651E52697E00E40EF5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

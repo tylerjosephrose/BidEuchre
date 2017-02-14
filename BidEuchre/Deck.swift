@@ -8,16 +8,6 @@
 
 import Foundation
 
-//
-//  Deck.swift
-//  EuchreSwift
-//
-//  Created by Tyler Rose on 12/10/16.
-//  Copyright © 2016 Tyler Rose. All rights reserved.
-//
-
-import Foundation
-
 extension MutableCollection where Indices.Iterator.Element == Index {
 	/// Shuffles the contents of this collection.
 	mutating func shuffle() {
