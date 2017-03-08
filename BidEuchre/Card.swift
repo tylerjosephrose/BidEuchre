@@ -25,12 +25,14 @@ class Card {
 	private var m_suit: Suit
 	private var m_owner: Owner
 	
+	// Constructor
 	init(value: Value, ofSuit suit: Suit) {
 		m_value = value
 		m_suit = suit
 		m_owner = Owner.MainDeck
 	}
 	
+	// Getters
 	func GetValue() -> Value {
 		return m_value
 	}
@@ -43,6 +45,7 @@ class Card {
 		return m_owner
 	}
 	
+	// Conversions for printing
 	func ValueToString() -> String {
 		return String(describing: m_value)
 	}
@@ -55,10 +58,12 @@ class Card {
 		return String(describing: m_owner)
 	}
 	
+	// Setters
 	func SetOwner(owner: Owner) {
 		m_owner = owner
 	}
 	
+	// overriden functions
 	static func ==(left: Card, right: Card) -> Bool {
 		if left.GetSuit() == right.GetSuit() && left.GetValue() == right.GetValue() {
 			return true

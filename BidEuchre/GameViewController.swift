@@ -86,14 +86,18 @@ class GameViewController: UIViewController {
 	func askUserBid(currentBid: Int, player: Owner) {
 		// first we need to set up the overlay with the proper information
 		let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbbidViewController") as! BidViewController
-		popOverVC.TitleLbl.text = "How much would you like to bid?"
-		popOverVC.MessageLbl.text = "The current bid is \(currentBid) by Player \(player.rawValue + 1)"
+		
 		
 		// all the overlay stuff
 		self.addChildViewController(popOverVC)
 		popOverVC.view.frame = self.view.frame
-		self.view.addSubview(popOverVC.view)
+		self.view.addSubview((popOverVC.view)!)
 		popOverVC.didMove(toParentViewController: self)
+		
+		// Finish initializing the popover bid controller
+		//popOverVC.TitleLbl.text = "Bid Amount?"
+		//popOverVC.MessageLbl.text = "The current bid is \(currentBid) by Player \(player.rawValue + 1)"
+		popOverVC.setupView(title: "Bid Amount?", message: "The current bid is \(currentBid) by Player \(player.rawValue + 1)", currentBid: currentBid)
 	}
 	
 	func increase(player: Owner) -> Owner {
