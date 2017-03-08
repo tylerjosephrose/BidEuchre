@@ -122,7 +122,7 @@ class AI {
 		DeterminePlayableCards(player: player, playableCards: &playableCards)
 		
 		let toPlay = DetermineBestCard(player: player, playableCards: &playableCards)
-		Trick.getInstance().SetCard(card: toPlay)
+		Trick.getInstance().Set(card: toPlay)
 		
 		//erase the played card
 		var cardnum = -1
@@ -285,7 +285,7 @@ class AI {
 	}
 	
 	func AIFinalizeBid() {
-		Trick.getInstance().SetTrump(trump: m_bestSuit!)
+		Trick.getInstance().Set(trump: m_bestSuit!)
 	}
 	
 	func AIPassCard(player: Player) -> Card {

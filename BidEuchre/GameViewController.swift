@@ -100,24 +100,41 @@ class GameViewController: UIViewController {
 			doBidding()
 		} else {
 			print("Player " + String(winningBidder.rawValue + 1) + " won the bid with " + String(currentBid))
+			if winningBidder == Owner.Player_1 {
+				// User won the bid
+				askUserSuit()
+			} else {
+				players[winningBidder.rawValue].myAI.AIFinalizeBid()
+			}
 		}
 	}
 	
-	private func askUserBid(currentBid: Int, player: Owner) {
-		// first we need to set up the overlay with the proper information
+	private func askUserSuit() {
+		// get the vc
 		let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbbidViewController") as! BidViewController
 		
+		// setup as child vc
+		self.addChildViewController(popOverVC)
+		popOverVC.view.frame = self.view.frame
+		self.view.addSubview((popOverVC.view)!)
+		popOverVC.didMove(toParentViewController: self)
 		
-		// all the overlay stuff
+		// Finish initializing the popover
+		popOverVC.setupSuitView()
+	}
+	
+	private func askUserBid(currentBid: Int, player: Owner) {
+		// get the VC
+		let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbbidViewController") as! BidViewController
+		
+		// setup as child VC
 		self.addChildViewController(popOverVC)
 		popOverVC.view.frame = self.view.frame
 		self.view.addSubview((popOverVC.view)!)
 		popOverVC.didMove(toParentViewController: self)
 		
 		// Finish initializing the popover bid controller
-		//popOverVC.TitleLbl.text = "Bid Amount?"
-		//popOverVC.MessageLbl.text = "The current bid is \(currentBid) by Player \(player.rawValue + 1)"
-		popOverVC.setupView(title: "Bid Amount?", player: "\(player.rawValue + 1)", currentBid: currentBid)
+		popOverVC.setupBidView(player: "\(player.rawValue + 1)", currentBid: currentBid)
 	}
 	
 	func increase(player: Owner) -> Owner {

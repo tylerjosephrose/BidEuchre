@@ -26,25 +26,48 @@ class BidViewController: UIViewController {
 	// Button Functions
 	@IBAction func btnPushed(_ sender: UIButton) {
 		let parent = self.parent as! GameViewController
-		if sender.currentTitle == "Shoot" {
-			parent.setUserBid(bid: 7)
-		} else if sender.currentTitle == "Alone" {
-			parent.setUserBid(bid: 8)
-		} else if sender.currentTitle != "Pass" {
-			parent.setUserBid(bid: Int(sender.currentTitle!)!)
+		if sender.currentTitle != "♠️" || sender.currentTitle != "♣️" || sender.currentTitle != "♥️" || sender.currentTitle != "♦️" {
+			if sender.currentTitle == "Shoot" {
+				parent.setUserBid(bid: 7)
+			} else if sender.currentTitle == "Alone" {
+				parent.setUserBid(bid: 8)
+			} else if sender.currentTitle != "Pass" {
+				parent.setUserBid(bid: Int(sender.currentTitle!)!)
+			}
+			parent.doBidding()
+		} else {
+			let trick = Trick.getInstance()
+			if sender.currentTitle == "♠️" {
+				trick.Set(trump: Suit.Spades)
+			} else if sender.currentTitle != "♣️" {
+				trick.Set(trump: Suit.Clubs)
+			} else if sender.currentTitle != "♥️" {
+				trick.Set(trump: Suit.Hearts)
+			} else if sender.currentTitle != "♦️" {
+				trick.Set(trump: Suit.Diamonds)
+			}
 		}
-		parent.doBidding()
-		let vc = self.parent?.childViewControllers.last
-		vc?.view.removeFromSuperview()
-		vc?.removeFromParentViewController()
+		self.willMove(toParentViewController: nil)
+		self.view.removeFromSuperview()
+		self.removeFromParentViewController()
 	}
 	
-	// StoredBid
-	var storedBid: Int!
+	// Setup the view for selecting the suit
+	func setupSuitView() {
+		TitleLbl.text = "Your bid won"
+		MessageLbl.text = "What suit would you like?"
+		btn1.setTitle("♠️", for: .normal)
+		btn2.setTitle("♣️", for: .normal)
+		btn3.setTitle("♥️", for: .normal)
+		btn4.setTitle("♦️", for: .normal)
+		btn5.isHidden = true
+		btn6.isHidden = true
+		btn7.isHidden = true
+	}
 
-	// Setup the view
-	func setupView(title: String, player: String, currentBid: Int) {
-		TitleLbl.text = title
+	// Setup the view for bidding
+	func setupBidView(player: String, currentBid: Int) {
+		TitleLbl.text = "Bid Amount?"
 		
 		// Need a different message if no one has bid yet, shoot, or alone
 		if currentBid < 3 {

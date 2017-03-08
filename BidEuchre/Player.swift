@@ -65,7 +65,7 @@ class Player {
 				}
 			}
 		}
-		trick.SetCard(card: card)
+		trick.Set(card: card)
 		m_hand.remove(at: choice - 1)
 		return 0
 	}

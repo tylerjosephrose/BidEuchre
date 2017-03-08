@@ -144,7 +144,7 @@ class Trick {
 		ReturnCards()
 	}
 	
-	func SetLeadSuit(suit: Suit) {
+	func SetLead(suit: Suit) {
 		m_leadSuit = suit
 	}
 	
@@ -152,20 +152,20 @@ class Trick {
 		m_leadPlayer = owner
 	}
 	
-	func SetCard(card: Card) {
+	func Set(card: Card) {
 		// Keep current owner so we can declare winner
 		m_trick.append(card)
 		if m_trick.count == 1 {
 			if card.GetValue() == Value.Jack && card.GetSuit() == GetLeft() {
-				SetLeadSuit(suit: m_trump!)
+				SetLead(suit: m_trump!)
 			}
 			else {
-				SetLeadSuit(suit: card.GetSuit())
+				SetLead(suit: card.GetSuit())
 			}
 		}
 	}
 	
-	func SetTrump(trump: Suit) {
+	func Set(trump: Suit) {
 		m_trump = trump
 	}
 	
