@@ -26,7 +26,7 @@ class BidViewController: UIViewController {
 	// Button Functions
 	@IBAction func btnPushed(_ sender: UIButton) {
 		let parent = self.parent as! GameViewController
-		if sender.currentTitle != "♠️" || sender.currentTitle != "♣️" || sender.currentTitle != "♥️" || sender.currentTitle != "♦️" {
+		if sender.currentTitle != "♠️" && sender.currentTitle != "♣️" && sender.currentTitle != "♥️" && sender.currentTitle != "♦️" {
 			if sender.currentTitle == "Shoot" {
 				parent.setUserBid(bid: 7)
 			} else if sender.currentTitle == "Alone" {
@@ -39,13 +39,14 @@ class BidViewController: UIViewController {
 			let trick = Trick.getInstance()
 			if sender.currentTitle == "♠️" {
 				trick.Set(trump: Suit.Spades)
-			} else if sender.currentTitle != "♣️" {
+			} else if sender.currentTitle == "♣️" {
 				trick.Set(trump: Suit.Clubs)
-			} else if sender.currentTitle != "♥️" {
+			} else if sender.currentTitle == "♥️" {
 				trick.Set(trump: Suit.Hearts)
-			} else if sender.currentTitle != "♦️" {
+			} else if sender.currentTitle == "♦️" {
 				trick.Set(trump: Suit.Diamonds)
 			}
+			print(trick.GetTrump())
 		}
 		self.willMove(toParentViewController: nil)
 		self.view.removeFromSuperview()
