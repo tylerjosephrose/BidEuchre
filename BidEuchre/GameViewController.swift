@@ -25,7 +25,19 @@ class GameViewController: UIViewController {
 	private var cardButtons:  [CardButton]!
 	
 	// bidding variables
-	private var playerBid: Owner!
+	private var biddersDone = 4
+	private var bidderUp: Owner!
+	private var winningBidder = Owner.InPlay
+	private var currentBid = 2
+	
+	// Set bid from BidViewController
+	func setUserBid(bid: Int) {
+		currentBid = bid
+		winningBidder = Owner.Player_1
+		if Owner.Player_1 == Owner(rawValue: (Trick.getInstance().GetLeadPlayer().rawValue + 3) % 4)! {
+			winningBidder = Owner.Player_1
+		}
+	}
 	
 	@IBAction func cardSelected(_ sender: CardButton) {
 		if gameStarted == false {
@@ -63,27 +75,35 @@ class GameViewController: UIViewController {
 			cardButtons[i].SetUp(card: players[0].m_hand[i])
 		}
 		
-		// Figure out bids
-		//let lead = Trick.getInstance().GetLeadPlayer()
-		var currentBid = 2
-		var playerUp = Trick.getInstance().GetLeadPlayer()
-		var winningBidder = Owner.InPlay
-		for _ in 0...4 {
-			if Owner.Player_1 == playerUp {
-				askUserBid(currentBid: currentBid, player: winningBidder)
-			} else {
-				let desiredBid = players[playerUp.rawValue].myAI.AIBid(player: players[playerUp.rawValue], currentBid: currentBid)
-				if desiredBid > currentBid {
-					currentBid = desiredBid
-					winningBidder = playerUp
-				}
-			}
-			playerUp = increase(player: playerUp)
-		}
-		playerBid = winningBidder
+		// Do this before every round of bidding
+		bidderUp = Trick.getInstance().GetLeadPlayer()
+		biddersDone = 0
+		doBidding()
 	}
 	
-	func askUserBid(currentBid: Int, player: Owner) {
+	func doBidding() {
+		if biddersDone < 4 {
+			if Owner.Player_1 == bidderUp {
+				askUserBid(currentBid: currentBid, player: winningBidder)
+				biddersDone += 1
+				bidderUp = increase(player: bidderUp)
+				return
+			} else {
+				let desiredBid = players[bidderUp.rawValue].myAI.AIBid(player: players[bidderUp.rawValue], currentBid: currentBid)
+				if desiredBid > currentBid {
+					currentBid = desiredBid
+					winningBidder = bidderUp
+				}
+			}
+			bidderUp = increase(player: bidderUp)
+			biddersDone += 1
+			doBidding()
+		} else {
+			print("Player " + String(winningBidder.rawValue + 1) + " won the bid with " + String(currentBid))
+		}
+	}
+	
+	private func askUserBid(currentBid: Int, player: Owner) {
 		// first we need to set up the overlay with the proper information
 		let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sbbidViewController") as! BidViewController
 		
@@ -97,7 +117,7 @@ class GameViewController: UIViewController {
 		// Finish initializing the popover bid controller
 		//popOverVC.TitleLbl.text = "Bid Amount?"
 		//popOverVC.MessageLbl.text = "The current bid is \(currentBid) by Player \(player.rawValue + 1)"
-		popOverVC.setupView(title: "Bid Amount?", message: "The current bid is \(currentBid) by Player \(player.rawValue + 1)", currentBid: currentBid)
+		popOverVC.setupView(title: "Bid Amount?", player: "\(player.rawValue + 1)", currentBid: currentBid)
 	}
 	
 	func increase(player: Owner) -> Owner {

@@ -276,7 +276,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.5700984589041096" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.31798480308219179" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fgN-wG-HWZ" firstAttribute="centerY" secondItem="pGN-9j-7fr" secondAttribute="centerY" id="9Ws-RI-YLe"/>
                             <constraint firstItem="fgN-wG-HWZ" firstAttribute="leading" secondItem="pGN-9j-7fr" secondAttribute="leadingMargin" constant="167" id="HE9-oJ-pvp"/>

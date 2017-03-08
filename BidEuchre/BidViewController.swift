@@ -25,23 +25,41 @@ class BidViewController: UIViewController {
 	
 	// Button Functions
 	@IBAction func btnPushed(_ sender: UIButton) {
-		
+		let parent = self.parent as! GameViewController
+		if sender.currentTitle == "Shoot" {
+			parent.setUserBid(bid: 7)
+		} else if sender.currentTitle == "Alone" {
+			parent.setUserBid(bid: 8)
+		} else if sender.currentTitle != "Pass" {
+			parent.setUserBid(bid: Int(sender.currentTitle!)!)
+		}
+		parent.doBidding()
+		let vc = self.parent?.childViewControllers.last
+		vc?.view.removeFromSuperview()
+		vc?.removeFromParentViewController()
 	}
+	
+	// StoredBid
+	var storedBid: Int!
 
 	// Setup the view
-	func setupView(title: String, message: String, currentBid: Int) {
+	func setupView(title: String, player: String, currentBid: Int) {
 		TitleLbl.text = title
 		
-		// Need a different message if no one has bid yet
-		if currentBid > 2 {
-			MessageLbl.text = message
-		} else {
+		// Need a different message if no one has bid yet, shoot, or alone
+		if currentBid < 3 {
 			MessageLbl.text = "No one has bid yet"
+		} else if currentBid == 7 {
+			MessageLbl.text = "Player " + player + " is shooting it"
+		} else if currentBid == 8 {
+			MessageLbl.text = "Player " + player + " is going alone"
+		} else {
+			MessageLbl.text = "The bid is " + String(currentBid) + " by Player " + player
 		}
 		
 		// Need to check if we are the last bidder and are forced to bid
 		var forceBid = false
-		if Owner.Player_1 == Owner(rawValue: (Trick.getInstance().GetLeadPlayer().rawValue + 3) % 4)! && currentBid > 2{
+		if Owner.Player_1 == Owner(rawValue: (Trick.getInstance().GetLeadPlayer().rawValue + 3) % 4)! && currentBid < 3{
 			forceBid = true
 		}
 		
