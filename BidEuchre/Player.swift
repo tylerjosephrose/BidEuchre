@@ -167,4 +167,12 @@ class Player {
 		}
 		return c1.GetValue().rawValue > c2.GetValue().rawValue
 	}
+	
+	static func increase(player: Owner) -> Owner {
+		if player != .Player_4 {
+			return Owner(rawValue: player.rawValue + 1)!
+		} else {
+			return .Player_1
+		}
+	}
 }

@@ -302,8 +302,9 @@ class AI {
 		}*/
 	}
 	
-	func AIFinalizeBid() {
+	func AIFinalizeBid(owner: Owner) {
 		Trick.getInstance().Set(trump: m_bestSuit!)
+		Trick.getInstance().SetBidder(owner: owner)
 	}
 	
 	func AIPassCard(player: Player) -> Card {

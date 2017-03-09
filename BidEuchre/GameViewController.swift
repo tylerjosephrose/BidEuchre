@@ -97,7 +97,7 @@ class GameViewController: UIViewController {
 			if Owner.Player_1 == bidderUp {
 				askUserBid(currentBid: currentBid, player: winningBidder)
 				biddersDone += 1
-				bidderUp = increase(player: bidderUp)
+				bidderUp = Player.increase(player: bidderUp)
 				return
 			} else {
 				let desiredBid = players[bidderUp.rawValue].myAI.AIBid(player: players[bidderUp.rawValue], currentBid: currentBid)
@@ -106,7 +106,7 @@ class GameViewController: UIViewController {
 					winningBidder = bidderUp
 				}
 			}
-			bidderUp = increase(player: bidderUp)
+			bidderUp = Player.increase(player: bidderUp)
 			biddersDone += 1
 			doBidding()
 		} else {
@@ -115,7 +115,7 @@ class GameViewController: UIViewController {
 				// User won the bid
 				askUserSuit()
 			} else {
-				players[winningBidder.rawValue].myAI.AIFinalizeBid()
+				players[winningBidder.rawValue].myAI.AIFinalizeBid(owner: winningBidder)
 				startPlayCards()
 			}
 		}
@@ -159,17 +159,15 @@ class GameViewController: UIViewController {
 			}
 			if playersDone < 4 {
 				if playerUp == Owner.Player_1 {
-					for card in cardButtons {
-						card.isEnabled = true
-					}
+					enableCards()
 					playersDone += 1
-					playerUp = increase(player: playerUp)
+					playerUp = Player.increase(player: playerUp)
 					return
 				} else {
 					disableCards()
 					players[playerUp.rawValue].myAI.AIPlayCard(player: players[playerUp.rawValue])
 				}
-				playerUp = increase(player: playerUp)
+				playerUp = Player.increase(player: playerUp)
 				playersDone += 1
 				startPlayCards()
 			} else {
@@ -209,17 +207,63 @@ class GameViewController: UIViewController {
 		}
 	}
 	
-	func increase(player: Owner) -> Owner {
-		if player != .Player_4 {
-			return Owner(rawValue: player.rawValue + 1)!
-		} else {
-			return .Player_1
-		}
-	}
-	
 	private func disableCards() {
 		for card in cardButtons {
 			card.isEnabled = false
+		}
+	}
+	
+	private func enableCards() {
+		let trick = Trick.getInstance()
+		if trick.GetLeadPlayer() == Owner.Player_1 {
+			for card in cardButtons {
+				card.isEnabled = true
+			}
+		} else {
+			let player = players[Owner.Player_1.rawValue]
+			var playableCards = [Card]()
+			
+			let leftBar = Card(value: Value.Jack, ofSuit: Trick.getInstance().GetLeft())
+			
+			// Logic for if the card is valid
+			if Trick.getInstance().GetLeadPlayer() != player.WhoAmI() {
+				for cards in player.m_hand {
+					if cards.GetSuit() == Trick.getInstance().GetLeadSuit() && cards != leftBar {
+						playableCards.append(cards)
+					}
+					if Trick.getInstance().GetLeadSuit() == Trick.getInstance().GetTrump() && cards == leftBar {
+						playableCards.append(cards)
+					}
+				}
+				if playableCards.count == 0 {
+					for cards in player.m_hand {
+						playableCards.append(cards)
+					}
+				}
+			}
+			else {
+				for cards in player.m_hand {
+					playableCards.append(cards)
+				}
+			}
+			if playableCards.count > 0 {
+				for card in cardButtons {
+					for playable in playableCards {
+						if playable == card.GetCard() {
+							card.isEnabled = true
+							card.alpha = 1.0
+						}
+					}
+					if card.isEnabled == false {
+						card.alpha = 0.7
+					}
+				}
+			} else {
+				for card in cardButtons {
+					card.isEnabled = true
+					card.alpha = 1.0
+				}
+			}
 		}
 	}
 	
