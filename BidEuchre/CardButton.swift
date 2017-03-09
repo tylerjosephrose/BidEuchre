@@ -35,10 +35,16 @@ class CardButton: UIButton {
 			m_image = UIImage(named: imageName)
 		}
 		self.setImage(m_image, for: UIControlState.normal)
+		self.setBackgroundImage(m_image, for: .disabled)
 	}
 	
 	func GetCard() -> Card {
 		return m_card!
+	}
+	
+	func GetImage() -> UIImage {
+		return m_image!
+
 	}
 
 }

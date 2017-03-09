@@ -74,7 +74,7 @@ class Card {
 	}
 	
 	static func !=(left: Card, right: Card) -> Bool {
-		return left == right
+		return !(left == right)
 	}
 	
 	func Print() -> String {

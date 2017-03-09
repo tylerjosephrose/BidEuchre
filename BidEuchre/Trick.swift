@@ -72,7 +72,7 @@ class Trick {
 	}
 	
 	func Evaluate() {
-		PrintTrick()
+		//PrintTrick()
 		print()
 		assert(m_trick.count > 2 && m_trick.count < 5, "There needs to be either 3 or 4 cards in the trick to evaluate!")
 		
@@ -140,6 +140,7 @@ class Trick {
 			}
 		}
 		m_winner = Highest.GetOwner()
+		m_leadPlayer = m_winner
 		print("\(Highest.OwnerToString()) of \(Highest.Print())")
 		ReturnCards()
 	}
@@ -154,6 +155,11 @@ class Trick {
 	
 	func Set(card: Card) {
 		// Keep current owner so we can declare winner
+		
+		
+		print(card.Print() + " by Player " + String(card.GetOwner().rawValue + 1))
+		
+		
 		m_trick.append(card)
 		if m_trick.count == 1 {
 			if card.GetValue() == Value.Jack && card.GetSuit() == GetLeft() {

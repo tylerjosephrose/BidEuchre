@@ -12,7 +12,7 @@ class AI {
 	private var m_bidScoring: Dictionary<Suit, Int> = [:]
 	private var m_bestSuit: Suit?
 	
-	func DeterminePlayableCards(player: Player, playableCards: inout [Card]) {
+	private func DeterminePlayableCards(player: Player, playableCards: inout [Card]) {
 		let leftBar = Card(value: Value.Jack, ofSuit: Trick.getInstance().GetLeft())
 		
 		// Logic for if the card is valid
@@ -38,7 +38,7 @@ class AI {
 		}
 	}
 	
-	func DetermineBestCard(player: Player, playableCards: inout [Card]) -> Card {
+	private func DetermineBestCard(player: Player, playableCards: inout [Card]) -> Card {
 		// This does NOT look at the cards played already to find the best match!!
 		// This is also heavily dependent on the hand being sorted according to trump
 		
@@ -58,7 +58,7 @@ class AI {
 		if Trick.getInstance().GetLeadPlayer() == player.WhoAmI() && (player.m_hand.count == 6 || Trick.getInstance().GetBidder() != player.WhoAmI()) {
 			// Hold on to one card in case player is leading with all trump but no right bar
 			let tempCard = playableCards[0]
-			for i in 0...playableCards.count - 1 {
+			for i in stride(from: playableCards.count - 1, to: 0, by: -1) {
 				if playableCards[i] == rightBar {
 					return playableCards[i]
 				}
@@ -95,6 +95,7 @@ class AI {
 		}
 			// Not leading
 		else {
+			// Trump is not lead suit
 			if Trick.getInstance().GetLeadSuit() != trump {
 				var trumpCard: Card?
 				for cards in playableCards {
@@ -111,10 +112,27 @@ class AI {
 				else {
 					return playableCards[playableCards.count - 1]
 				}
+			} else {
+				// Trump is lead suit
+				var lowTrump: Card?
+				for card in playableCards {
+					if card == rightBar {
+						return card
+					}
+					if card.GetSuit() == trump {
+						if lowTrump == nil {
+							lowTrump = card
+						}else if card.GetValue() == Value.Ten || card.GetValue() == Value.Nine {
+							lowTrump = card
+						}
+					}
+				}
+				if lowTrump != nil {
+					return lowTrump!
+				}
+				return playableCards[playableCards.count - 1]
 			}
 		}
-		assert(true, "Should never get to this part of DetermineBestCard")
-		return Card(value: Value.Nine, ofSuit: Suit.Hearts)
 	}
 	
 	func AIPlayCard(player: Player) {
@@ -190,7 +208,7 @@ class AI {
 		return bid
 	}
 	
-	func BidScoring(player: Player) {
+	private func BidScoring(player: Player) {
 		// Score the hand on each suit
 		for i in 1...4 {
 			var score = 0

@@ -30,6 +30,15 @@ class GameViewController: UIViewController {
 	private var winningBidder = Owner.InPlay
 	private var currentBid = 2
 	
+	// playing variables
+	private var playerUp: Owner!
+	private var playersDone = 0
+	
+	// round variables
+	private var tricksDone = 0
+	private var team1Tricks = 0
+	private var team2Tricks = 0
+	
 	// Set bid from BidViewController
 	func setUserBid(bid: Int) {
 		currentBid = bid
@@ -45,7 +54,9 @@ class GameViewController: UIViewController {
 		}
 		print("The \(sender.GetCard().Print()) was selected")
 		sender.isHidden = true
-		Deck.GetInstance().Return(card: sender.GetCard())
+		//Deck.GetInstance().Return(card: sender.GetCard())
+		Trick.getInstance().Set(card: sender.GetCard())
+		startPlayCards()
 	}
 	@IBAction func cardHolding(_ sender: CardButton) {
 		if gameStarted == false {
@@ -62,7 +73,7 @@ class GameViewController: UIViewController {
 	@IBAction func startGamePressed(_ sender: UIButton) {
 		startGameBtn.isHidden = true
 		gameStarted = true
-		cardButtons = [card1Var, card2Var, card3Var, card4Var, card5Var, card6Var]
+		
 		Deck.GetInstance().Shuffle()
 		
 		// Get hand for each player
@@ -105,6 +116,7 @@ class GameViewController: UIViewController {
 				askUserSuit()
 			} else {
 				players[winningBidder.rawValue].myAI.AIFinalizeBid()
+				startPlayCards()
 			}
 		}
 	}
@@ -137,6 +149,66 @@ class GameViewController: UIViewController {
 		popOverVC.setupBidView(player: "\(player.rawValue + 1)", currentBid: currentBid)
 	}
 	
+	func startPlayCards() {
+		let trick = Trick.getInstance()
+		if tricksDone < 6 {
+			if playersDone == 0 {
+				playerUp = trick.GetLeadPlayer()
+				print("Trump is:")
+				print(Trick.getInstance().GetTrump())
+			}
+			if playersDone < 4 {
+				if playerUp == Owner.Player_1 {
+					for card in cardButtons {
+						card.isEnabled = true
+					}
+					playersDone += 1
+					playerUp = increase(player: playerUp)
+					return
+				} else {
+					disableCards()
+					players[playerUp.rawValue].myAI.AIPlayCard(player: players[playerUp.rawValue])
+				}
+				playerUp = increase(player: playerUp)
+				playersDone += 1
+				startPlayCards()
+			} else {
+				// Stuff to do after cards have been played
+				trick.Evaluate()
+				playersDone = 0
+				tricksDone += 1
+				// evaluate and give point to correct team
+				if trick.GetWinner() == Owner.Player_1 || trick.GetWinner() == Owner.Player_3 {
+					team1Tricks += 1
+				} else {
+					team2Tricks += 1
+				}
+				startPlayCards()
+			}
+		} else {
+			// When all tricks have been played
+			// Team 1 bid
+			if winningBidder == Owner.Player_1 || winningBidder == Owner.Player_3 {
+				if team1Tricks > currentBid {
+					print("Team 1 scored " + String(team1Tricks) + " points")
+					print("Team 2 scored " + String(team2Tricks) + " points")
+				} else {
+					print("Team 1 scored -" + String(currentBid) + " points")
+					print("Team 2 scored " + String(team2Tricks) + " points")
+				}
+			} else {
+				// Team 2 bid
+				if team2Tricks > currentBid {
+					print("Team 1 scored " + String(team1Tricks) + " points")
+					print("Team 2 scored " + String(team2Tricks) + " points")
+				} else {
+					print("Team 1 scored " + String(team1Tricks) + " points")
+					print("Team 2 scored -" + String(currentBid) + " points")
+				}
+			}
+		}
+	}
+	
 	func increase(player: Owner) -> Owner {
 		if player != .Player_4 {
 			return Owner(rawValue: player.rawValue + 1)!
@@ -145,11 +217,24 @@ class GameViewController: UIViewController {
 		}
 	}
 	
+	private func disableCards() {
+		for card in cardButtons {
+			card.isEnabled = false
+		}
+	}
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+		cardButtons = [card1Var, card2Var, card3Var, card4Var, card5Var, card6Var]
+		card1Var.SetUp(card: Card(value: .Jack, ofSuit: .Hearts))
+		card2Var.SetUp(card: Card(value: .Jack, ofSuit: .Diamonds))
+		card3Var.SetUp(card: Card(value: .Ace, ofSuit: .Hearts))
+		card4Var.SetUp(card: Card(value: .King, ofSuit: .Hearts))
+		card5Var.SetUp(card: Card(value: .Queen, ofSuit: .Hearts))
+		card6Var.SetUp(card: Card(value: .Ten, ofSuit: .Hearts))
+		disableCards()
     }
 
     override func didReceiveMemoryWarning() {

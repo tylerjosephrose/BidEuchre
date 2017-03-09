@@ -46,7 +46,8 @@ class BidViewController: UIViewController {
 			} else if sender.currentTitle == "♦️" {
 				trick.Set(trump: Suit.Diamonds)
 			}
-			print(trick.GetTrump())
+			trick.SetBidder(owner: .Player_1)
+			parent.startPlayCards()
 		}
 		self.willMove(toParentViewController: nil)
 		self.view.removeFromSuperview()
